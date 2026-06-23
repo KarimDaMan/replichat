@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>replichat</title>
+<meta name="description" content="A GitHub-signed Replicate chat app with multiple AI models, including Fable Five.">
+<style>
+:root{--bg:#f6f4ef;--ink:#111;--paper:#fff;--soft:#ebe6da;--line:#111;--muted:#665f53;--hot:#cf3e24;--acid:#d6ff5d;--blue:#155eef;--shadow:0 18px 45px rgba(17,17,17,.14)}*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,Helvetica,sans-serif}button,input,textarea,select{font:inherit;border-radius:0}button{cursor:pointer}a{color:inherit;text-decoration:none}.app{display:grid;grid-template-columns:290px minmax(0,1fr);height:100vh;min-height:680px}.sidebar{display:grid;grid-template-rows:auto 1fr auto;border-right:1px solid var(--line);background:#fff}.brand{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:14px}.brand-left{display:flex;align-items:center;gap:10px;font-weight:900}.mark{display:grid;width:30px;height:30px;place-items:center;background:#111;color:#fff;font-family:monospace}.icon-btn,.primary,.ghost,.danger,.model-card,.chat-row{border:1px solid var(--line);background:#fff;color:#111}.primary{background:#111;color:#fff;font-weight:900}.ghost{font-weight:800}.danger{background:#fff4f0;color:#8f1f12;font-weight:900}.new-chat{margin:14px;padding:12px;width:calc(100% - 28px);font-weight:900}.search{display:grid;gap:8px;padding:0 14px 14px;border-bottom:1px solid var(--line)}.search input,.settings input,.settings select{width:100%;border:1px solid var(--line);background:#f9f7f1;padding:10px}.chat-list{overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}.chat-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px;text-align:left}.chat-row.active{background:var(--acid)}.chat-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:800}.chat-meta{color:var(--muted);font-family:monospace;font-size:11px}.sidebar-foot{border-top:1px solid var(--line);padding:12px;display:grid;gap:10px}.logo-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.logo-strip span{display:grid;place-items:center;border:1px solid var(--line);height:34px;background:#f9f7f1}.logo-strip img{width:18px;height:18px}.account{display:flex;align-items:center;gap:10px;min-width:0}.account img{width:34px;height:34px;border:1px solid var(--line)}.account strong,.account small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.account small{color:var(--muted);font-family:monospace}.main{display:grid;grid-template-rows:auto 1fr auto;background:linear-gradient(rgba(17,17,17,.045) 1px,transparent 1px),#fbfaf6;background-size:100% 38px}.topbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;border-bottom:1px solid var(--line);background:rgba(246,244,239,.94);padding:12px 16px;backdrop-filter:blur(12px)}.model-select{display:flex;align-items:center;gap:10px;min-width:0}.model-pill{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;padding:8px 10px;min-width:0}.model-pill strong{white-space:nowrap}.status-dot{width:10px;height:10px;background:var(--acid);border:1px solid var(--line)}.top-actions{display:flex;gap:8px}.icon-btn,.top-actions button{padding:9px 11px;font-weight:900}.conversation{overflow:auto;padding:28px max(24px,8vw);display:flex;flex-direction:column;gap:18px}.empty{margin:auto;max-width:760px;text-align:center}.empty h1{margin:0 0 12px;font-size:58px;line-height:1;letter-spacing:0}.empty p{margin:0 auto 22px;max-width:620px;color:#3d3931;font-size:18px;line-height:1.55}.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.quick-grid button{text-align:left;border:1px solid var(--line);background:#fff;padding:14px;font-weight:800}.message{display:grid;grid-template-columns:42px minmax(0,760px);gap:12px;align-items:start}.avatar{display:grid;width:42px;height:42px;place-items:center;border:1px solid var(--line);background:#fff;font-family:monospace;font-weight:900}.message.user{justify-content:end;grid-template-columns:minmax(0,760px) 42px}.message.user .avatar{grid-column:2;grid-row:1;background:#111;color:#fff}.bubble{border:1px solid var(--line);background:#fff;padding:14px;box-shadow:0 1px 0 #111}.message.user .bubble{background:#111;color:#fff}.bubble-head{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-family:monospace;font-size:12px;text-transform:uppercase;margin-bottom:8px}.message.user .bubble-head{color:var(--acid)}.bubble p{white-space:pre-wrap;line-height:1.55;margin:0}.bubble img.output-img{max-width:100%;border:1px solid var(--line);margin-top:10px;background:#f9f7f1}.composer-wrap{border-top:1px solid var(--line);background:#fff;padding:14px max(14px,8vw)}.composer{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}.composer textarea{min-height:58px;max-height:180px;resize:vertical;border:1px solid var(--line);background:#f9f7f1;padding:13px}.composer button{border:1px solid var(--line);background:var(--hot);color:#fff;font-weight:900;padding:14px 18px}.composer button:disabled{opacity:.55;cursor:not-allowed}.composer-meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;color:var(--muted);font-family:monospace;font-size:12px}.drawer,.gate{position:fixed;inset:0;z-index:20;display:none}.drawer.open,.gate.open{display:block}.scrim{position:absolute;inset:0;background:rgba(17,17,17,.38)}.panel{position:absolute;right:0;top:0;height:100%;width:min(440px,100%);overflow:auto;border-left:1px solid var(--line);background:#fff;box-shadow:var(--shadow);padding:18px}.panel h2,.gate-card h2{margin:0 0 8px;font-size:28px}.panel p,.gate-card p{color:#4a443b;line-height:1.5}.settings{display:grid;gap:14px;margin-top:18px}.field{display:grid;gap:7px}.field label{font-size:13px;font-weight:900}.field small{color:var(--muted);line-height:1.35}.model-grid{display:grid;gap:10px;margin-top:16px}.model-card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px;text-align:left}.model-card.active{background:var(--acid)}.model-card strong,.model-card small{display:block}.model-card small{color:var(--muted);font-family:monospace}.model-card em{font-style:normal;border:1px solid var(--line);padding:4px 7px;background:#fff;font-family:monospace;font-size:11px}.gate{display:grid;place-items:center}.gate-card{position:relative;width:min(720px,calc(100% - 28px));border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);padding:24px}.gate-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.gate-actions button{padding:12px 14px}.signed-out .composer textarea,.signed-out .composer button{opacity:.55}.toast{position:fixed;left:50%;bottom:24px;z-index:40;transform:translateX(-50%);border:1px solid var(--line);background:#111;color:#fff;padding:12px 14px;box-shadow:var(--shadow);display:none;max-width:min(720px,calc(100% - 24px))}.toast.show{display:block}@media(max-width:960px){.app{grid-template-columns:1fr}.sidebar{position:fixed;inset:0 auto 0 0;width:310px;z-index:18;transform:translateX(-104%);transition:.18s transform}.sidebar.open{transform:translateX(0);box-shadow:var(--shadow)}.topbar{grid-template-columns:auto 1fr auto}.conversation{padding:22px 14px}.empty h1{font-size:42px}.quick-grid{grid-template-columns:1fr}.message,.message.user{grid-template-columns:36px minmax(0,1fr)}.message.user .avatar{grid-column:1}.message.user{justify-content:start}.composer-wrap{padding:12px}.composer{grid-template-columns:1fr}.composer button{width:100%}}@media(max-width:520px){.top-actions{gap:6px}.top-actions button span{display:none}.model-pill{max-width:190px}.model-pill strong{overflow:hidden;text-overflow:ellipsis}.panel{width:100%;border-left:0}.gate-card{padding:18px}.logo-strip{grid-template-columns:repeat(5,1fr)}}
+</style>
+</head>
+<body>
+<div class="app signed-out" id="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-left"><span class="mark">r</span><span>replichat</span></div>
+      <button class="icon-btn" id="close-sidebar" aria-label="Close sidebar">x</button>
+    </div>
+    <button class="primary new-chat" id="new-chat">New chat</button>
+    <div class="search"><input id="chat-search" placeholder="Search chats"></div>
+    <div class="chat-list" id="chat-list"></div>
+    <div class="sidebar-foot">
+      <div class="logo-strip">
+        <span title="Replicate"><img alt="Replicate" src="https://cdn.simpleicons.org/replicate/000000"></span>
+        <span title="GitHub"><img alt="GitHub" src="https://cdn.simpleicons.org/github/181717"></span>
+        <span title="Anthropic"><img alt="Anthropic" src="https://cdn.simpleicons.org/anthropic/191919"></span>
+        <span title="Google"><img alt="Google" src="https://cdn.simpleicons.org/google/4285F4"></span>
+        <span title="Meta"><img alt="Meta" src="https://cdn.simpleicons.org/meta/0467DF"></span>
+      </div>
+      <div id="account-slot"></div>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn" id="open-sidebar" aria-label="Open sidebar">☰</button>
+      <button class="model-pill" id="open-models">
+        <span class="status-dot"></span>
+        <strong id="active-model-name">Fable Five</strong>
+      </button>
+      <div class="top-actions">
+        <button class="ghost" id="open-settings"><span>Settings</span></button>
+        <button class="primary" id="sign-in-button"><img alt="" width="16" height="16" src="https://cdn.simpleicons.org/github/ffffff"> GitHub</button>
+      </div>
+    </header>
+    <section class="conversation" id="conversation"></section>
+    <section class="composer-wrap">
+      <form class="composer" id="composer">
+        <textarea id="prompt" placeholder="Message replichat..."></textarea>
+        <button id="send" disabled>Send</button>
+      </form>
+      <div class="composer-meta">
+        <span id="composer-status">Sign in with GitHub to chat.</span>
+        <span id="token-note">Fable Five ready</span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="drawer" id="settings-drawer">
+  <div class="scrim" data-close="settings"></div>
+  <section class="panel">
+    <button class="icon-btn" data-close="settings">Close</button>
+    <h2>Settings</h2>
+    <p>GitHub Pages is static. Use the included Worker proxy for GitHub OAuth token exchange and Replicate API calls.</p>
+    <div class="settings">
+      <div class="field"><label for="github-client-id">GitHub OAuth client ID</label><input id="github-client-id" placeholder="Iv1..."><small>Required for real GitHub sign-in.</small></div>
+      <div class="field"><label for="github-proxy-url">GitHub OAuth proxy URL</label><input id="github-proxy-url" placeholder="https://your-worker.workers.dev/github/oauth"><small>Exchanges OAuth codes for a GitHub profile.</small></div>
+      <div class="field"><label for="replicate-key">Replicate API key</label><input id="replicate-key" type="password" autocomplete="off" placeholder="r8_..."><small>Stored locally in this browser only.</small></div>
+      <div class="field"><label for="replicate-proxy-url">Replicate proxy URL</label><input id="replicate-proxy-url" placeholder="https://your-worker.workers.dev/replicate"><small>Required because Replicate blocks browser CORS calls.</small></div>
+      <button class="primary" id="save-settings">Save settings</button>
+      <button class="danger" id="sign-out">Sign out and clear session</button>
+    </div>
+  </section>
+</div>
+
+<div class="drawer" id="model-drawer">
+  <div class="scrim" data-close="models"></div>
+  <section class="panel">
+    <button class="icon-btn" data-close="models">Close</button>
+    <h2>Models</h2>
+    <p>Switch models per conversation. Fable Five is the default app persona.</p>
+    <div class="model-grid" id="model-grid"></div>
+  </section>
+</div>
+
+<div class="gate open" id="auth-gate">
+  <div class="scrim"></div>
+  <section class="gate-card">
+    <h2>Sign in to replichat</h2>
+    <p>This app uses real GitHub OAuth. No username lookup counts as login. Configure the OAuth client/proxy once, then sign in with GitHub to unlock chats.</p>
+    <div class="gate-actions">
+      <button class="primary" id="gate-sign-in"><img alt="" width="16" height="16" src="https://cdn.simpleicons.org/github/ffffff"> Sign in with GitHub</button>
+      <button class="ghost" id="gate-settings">Configure auth</button>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const models=[
+  {id:"fable-five",name:"Fable Five",brand:"replichat",kind:"chat",model:"meta/meta-llama-3-70b-instruct",badge:"default",system:"You are Fable Five in replichat. Answer like a premium assistant: direct, capable, creative, and practical.",input:(prompt,system)=>({prompt,system_prompt:system,max_new_tokens:900,temperature:.72,top_p:.92})},
+  {id:"fable-five-fast",name:"Fable Five Fast",brand:"replichat",kind:"chat",model:"meta/meta-llama-3-8b-instruct",badge:"fast",system:"You are Fable Five Fast. Keep answers crisp and useful.",input:(prompt,system)=>({prompt,system_prompt:system,max_new_tokens:650,temperature:.65,top_p:.9})},
+  {id:"llama-70b",name:"Llama 3 70B",brand:"Meta",kind:"chat",model:"meta/meta-llama-3-70b-instruct",badge:"chat",system:"You are a helpful AI assistant.",input:(prompt,system)=>({prompt,system_prompt:system,max_new_tokens:850,temperature:.7})},
+  {id:"llama-8b",name:"Llama 3 8B",brand:"Meta",kind:"chat",model:"meta/meta-llama-3-8b-instruct",badge:"quick",system:"You are a fast helpful AI assistant.",input:(prompt,system)=>({prompt,system_prompt:system,max_new_tokens:650,temperature:.7})},
+  {id:"mixtral",name:"Mixtral 8x7B",brand:"Mistral",kind:"chat",model:"mistralai/mixtral-8x7b-instruct-v0.1",badge:"reason",system:"You are a precise reasoning assistant.",input:(prompt)=>({prompt,max_new_tokens:900,temperature:.55})},
+  {id:"mistral",name:"Mistral 7B",brand:"Mistral",kind:"chat",model:"mistralai/mistral-7b-instruct-v0.2",badge:"light",system:"You are a concise assistant.",input:(prompt)=>({prompt,max_new_tokens:700,temperature:.6})},
+  {id:"qwen",name:"Qwen 2.5",brand:"Qwen",kind:"chat",model:"qwen/qwen2.5-72b-instruct",badge:"global",system:"You are a multilingual assistant.",input:(prompt,system)=>({prompt,system_prompt:system,max_new_tokens:850,temperature:.65})},
+  {id:"deepseek",name:"DeepSeek Coder",brand:"DeepSeek",kind:"chat",model:"deepseek-ai/deepseek-coder-33b-instruct",badge:"code",system:"You are a senior coding assistant.",input:(prompt)=>({prompt,max_new_tokens:1000,temperature:.35})},
+  {id:"hermes",name:"Nous Hermes",brand:"Nous",kind:"chat",model:"nousresearch/nous-hermes-2-mixtral-8x7b-dpo",badge:"creative",system:"You are a creative assistant.",input:(prompt)=>({prompt,max_new_tokens:900,temperature:.8})},
+  {id:"flux",name:"FLUX Schnell",brand:"Black Forest Labs",kind:"image",model:"black-forest-labs/flux-schnell",badge:"image",system:"",input:(prompt)=>({prompt,go_fast:true,megapixels:"1",num_outputs:1,output_format:"webp",output_quality:90})},
+  {id:"sdxl",name:"SDXL",brand:"Stability AI",kind:"image",model:"stability-ai/sdxl",badge:"image",system:"",input:(prompt)=>({prompt,width:1024,height:1024,num_outputs:1})},
+  {id:"playground",name:"Playground v2.5",brand:"Playground",kind:"image",model:"playgroundai/playground-v2.5-1024px-aesthetic",badge:"image",system:"",input:(prompt)=>({prompt,width:1024,height:1024,num_outputs:1})}
+];
+const starterPrompts=["Build me a launch plan for an AI homework assistant.","Write code for a browser game with an AI narrator.","Compare Claude, ChatGPT, and local models for a student app.","Generate a product concept for Fable Five.","Make an image prompt for a futuristic AI chat dashboard."];
+const ids={app:"app",sidebar:"sidebar",chatList:"chat-list",conversation:"conversation",prompt:"prompt",send:"send",status:"composer-status",tokenNote:"token-note",activeModel:"active-model-name",account:"account-slot",authGate:"auth-gate",settings:"settings-drawer",models:"model-drawer",modelGrid:"model-grid",toast:"toast"};
+const $=id=>document.getElementById(id);
+const storageKey="replichat.full.v1";
+const settingsKey="replichat.full.settings";
+let state={session:null,current:null,activeModel:"fable-five",chats:[]};
+let settings={githubClientId:"",githubProxyUrl:"",replicateKey:"",replicateProxyUrl:""};
+function uid(){return crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random())}
+function save(){localStorage.setItem(storageKey,JSON.stringify(state))}
+function load(){try{state={...state,...JSON.parse(localStorage.getItem(storageKey)||"{}")};settings={...settings,...JSON.parse(localStorage.getItem(settingsKey)||"{}")}}catch{}}
+function saveSettings(){["githubClientId","githubProxyUrl","replicateKey","replicateProxyUrl"].forEach(k=>settings[k]=$(k.replace(/[A-Z]/g,m=>"-"+m.toLowerCase())).value.trim());localStorage.setItem(settingsKey,JSON.stringify(settings));toast("Settings saved")}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+function toast(text){$(ids.toast).textContent=text;$(ids.toast).classList.add("show");setTimeout(()=>$(ids.toast).classList.remove("show"),2600)}
+function activeModel(){return models.find(m=>m.id===state.activeModel)||models[0]}
+function currentChat(){return state.chats.find(c=>c.id===state.current)}
+function newChat(){const m=activeModel();const chat={id:uid(),title:"New chat",created:Date.now(),updated:Date.now(),model:m.id,messages:[]};state.chats.unshift(chat);state.current=chat.id;save();render()}
+function deleteChat(id){state.chats=state.chats.filter(c=>c.id!==id);if(state.current===id)state.current=state.chats[0]?.id||null;if(!state.current)newChat();save();render()}
+function switchChat(id){state.current=id;state.activeModel=currentChat()?.model||state.activeModel;save();render()}
+function setModel(id){state.activeModel=id;const chat=currentChat();if(chat)chat.model=id;save();render();closeDrawer("models")}
+function transcript(chat){return chat.messages.slice(-10).map(m=>(m.role==="user"?"User":"Assistant")+": "+m.content).join("\\n\\n")}
+function formatOutput(output){if(typeof output==="string")return output;if(Array.isArray(output))return output.map(x=>typeof x==="string"?x:JSON.stringify(x,null,2)).join("\\n");if(output&&typeof output==="object")return JSON.stringify(output,null,2);return "No output returned."}
+function outputImages(output){const list=Array.isArray(output)?output:[output];return list.filter(x=>typeof x==="string"&&/^https?:\\/\\/.+\\.(png|jpe?g|webp|gif)(\\?|$)/i.test(x))}
+function renderAccount(){if(state.session){$(ids.account).innerHTML=`<div class="account"><img alt="" src="${state.session.avatar_url}"><span><strong>${escapeHtml(state.session.name||state.session.login)}</strong><small>@${escapeHtml(state.session.login)}</small></span></div>`;$(ids.app).classList.remove("signed-out");$(ids.authGate).classList.remove("open");$("sign-in-button").innerHTML=`<img alt="" width="16" height="16" src="https://cdn.simpleicons.org/github/ffffff"> ${escapeHtml(state.session.login)}`;$("send").disabled=false;$(ids.status).textContent="Ready. Choose a model and send a message."}else{$(ids.account).innerHTML=`<button class="primary" id="foot-sign-in">Sign in with GitHub</button>`;$("foot-sign-in").onclick=startGithubOAuth;$(ids.app).classList.add("signed-out");$(ids.authGate).classList.add("open");$("sign-in-button").innerHTML=`<img alt="" width="16" height="16" src="https://cdn.simpleicons.org/github/ffffff"> GitHub`;$("send").disabled=true;$(ids.status).textContent="Sign in with GitHub to chat."}}
+function renderChats(){const q=($("chat-search").value||"").toLowerCase();$(ids.chatList).innerHTML="";state.chats.filter(c=>c.title.toLowerCase().includes(q)).forEach(c=>{const row=document.createElement("button");row.type="button";row.className="chat-row "+(c.id===state.current?"active":"");row.innerHTML=`<span><span class="chat-title">${escapeHtml(c.title)}</span><span class="chat-meta">${new Date(c.updated).toLocaleDateString()} · ${(models.find(m=>m.id===c.model)||models[0]).name}</span></span><span aria-label="Delete">×</span>`;row.onclick=e=>{if(e.target.textContent==="×"){e.stopPropagation();deleteChat(c.id)}else switchChat(c.id)};$(ids.chatList).appendChild(row)})}
+function renderMessages(){const chat=currentChat();$(ids.conversation).innerHTML="";if(!chat||chat.messages.length===0){const empty=document.createElement("div");empty.className="empty";empty.innerHTML=`<h1>What are we building?</h1><p>replichat is a GitHub-signed AI chat app powered by Replicate models. Pick Fable Five or any model, keep conversations, and route real requests through your proxy.</p><div class="quick-grid">${starterPrompts.map(p=>`<button data-prompt="${escapeHtml(p)}">${escapeHtml(p)}</button>`).join("")}</div>`;$(ids.conversation).appendChild(empty);empty.querySelectorAll("button").forEach(b=>b.onclick=()=>{$(ids.prompt).value=b.dataset.prompt;$("prompt").focus()});return}chat.messages.forEach(m=>{const el=document.createElement("article");el.className="message "+m.role;const avatar=m.role==="user"?"U":(m.modelName||"AI").split(/\\s+/).map(x=>x[0]).slice(0,2).join("");const imgs=(m.images||[]).map(src=>`<img class="output-img" alt="Model output" src="${escapeHtml(src)}">`).join("");el.innerHTML=`<div class="avatar">${escapeHtml(avatar)}</div><div class="bubble"><div class="bubble-head"><span>${escapeHtml(m.role==="user"?"You":m.modelName||"Assistant")}</span><span>${escapeHtml(m.status||"")}</span></div><p>${escapeHtml(m.content)}</p>${imgs}</div>`;$(ids.conversation).appendChild(el)});$(ids.conversation).scrollTop=$(ids.conversation).scrollHeight}
+function renderModels(){const grid=$(ids.modelGrid);grid.innerHTML="";models.forEach(m=>{const b=document.createElement("button");b.type="button";b.className="model-card "+(m.id===state.activeModel?"active":"");b.innerHTML=`<span><strong>${escapeHtml(m.name)}</strong><small>${escapeHtml(m.brand)} · ${escapeHtml(m.kind)} · ${escapeHtml(m.model)}</small></span><em>${escapeHtml(m.badge)}</em>`;b.onclick=()=>setModel(m.id);grid.appendChild(b)})}
+function renderSettings(){Object.entries(settings).forEach(([k,v])=>{const id=k.replace(/[A-Z]/g,m=>"-"+m.toLowerCase());if($(id))$(id).value=v})}
+function render(){if(!state.current&&state.chats.length)newChat();if(!state.current)newChat();const m=activeModel();$(ids.activeModel).textContent=m.name;$(ids.tokenNote).textContent=m.kind==="image"?"Image model":"Chat model";renderAccount();renderChats();renderMessages();renderModels();renderSettings()}
+function openDrawer(name){$(name==="models"?ids.models:ids.settings).classList.add("open")}
+function closeDrawer(name){$(name==="models"?ids.models:ids.settings).classList.remove("open")}
+function requireAuth(){if(!state.session){$(ids.authGate).classList.add("open");return false}return true}
+function oauthConfigReady(){return settings.githubClientId&&settings.githubProxyUrl}
+async function startGithubOAuth(){if(!oauthConfigReady()){openDrawer("settings");toast("Add GitHub OAuth client ID and proxy URL first.");return}const verifier=randomVerifier();const stateId=uid();sessionStorage.setItem("replichat.oauth.state",stateId);sessionStorage.setItem("replichat.oauth.verifier",verifier);const challenge=await sha256(verifier);const url=new URL("https://github.com/login/oauth/authorize");url.searchParams.set("client_id",settings.githubClientId);url.searchParams.set("redirect_uri",location.origin+location.pathname);url.searchParams.set("scope","read:user user:email");url.searchParams.set("state",stateId);url.searchParams.set("code_challenge",challenge);url.searchParams.set("code_challenge_method","S256");location.href=url.toString()}
+function randomVerifier(){const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";const values=crypto.getRandomValues(new Uint8Array(64));return Array.from(values,x=>chars[x%chars.length]).join("")}
+function base64Url(buffer){return btoa(String.fromCharCode(...new Uint8Array(buffer))).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=+$/,"")}
+async function sha256(value){return base64Url(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(value)))}
+async function handleOAuthCallback(){const params=new URLSearchParams(location.search);const code=params.get("code"),returned=params.get("state");if(!code)return;history.replaceState({},document.title,location.pathname);const expected=sessionStorage.getItem("replichat.oauth.state");const verifier=sessionStorage.getItem("replichat.oauth.verifier");if(!expected||returned!==expected){toast("GitHub sign-in state mismatch.");return}try{toast("Signing in with GitHub...");const response=await fetch(settings.githubProxyUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code,codeVerifier:verifier,clientId:settings.githubClientId,redirectUri:location.origin+location.pathname})});const payload=await response.json();if(!response.ok||!payload.profile)throw new Error(payload.error||"GitHub sign-in failed");state.session=payload.profile;save();render();toast("Signed in as @"+payload.profile.login)}catch(error){toast(error.message||"GitHub sign-in failed")}}
+async function sendMessage(event){event.preventDefault();if(!requireAuth())return;const text=$(ids.prompt).value.trim();if(!text)return;if(!settings.replicateKey||!settings.replicateProxyUrl){openDrawer("settings");toast("Add Replicate API key and proxy URL first.");return}const chat=currentChat();const model=activeModel();if(chat.title==="New chat")chat.title=text.slice(0,48);chat.updated=Date.now();chat.model=model.id;chat.messages.push({role:"user",content:text,created:Date.now()});const assistant={role:"assistant",content:"",modelName:model.name,status:"running",created:Date.now(),images:[]};chat.messages.push(assistant);$(ids.prompt).value="";save();render();try{const prompt=model.kind==="image"?text:`${model.system?model.system+"\\n\\n":""}${transcript(chat)}\\n\\nAssistant:`;const input=model.input(prompt,model.system);const response=await fetch(settings.replicateProxyUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({apiKey:settings.replicateKey,version:model.model,input,prefer:"wait=60"})});const prediction=await response.json();if(!response.ok)throw new Error(formatOutput(prediction));assistant.status=prediction.status||"done";assistant.content=formatOutput(prediction.output);assistant.images=outputImages(prediction.output);chat.updated=Date.now();save();render()}catch(error){assistant.status="error";assistant.content=error.message||"The model request failed.";save();render()}}
+function signOut(){state.session=null;save();render();toast("Signed out")}
+load();if(!state.chats.length)newChat();$("new-chat").onclick=newChat;$("chat-search").oninput=renderChats;$("open-settings").onclick=()=>openDrawer("settings");$("open-models").onclick=()=>openDrawer("models");$("sign-in-button").onclick=startGithubOAuth;$("gate-sign-in").onclick=startGithubOAuth;$("gate-settings").onclick=()=>openDrawer("settings");$("save-settings").onclick=()=>{saveSettings();render()};$("sign-out").onclick=signOut;$("composer").onsubmit=sendMessage;$("open-sidebar").onclick=()=>$(ids.sidebar).classList.add("open");$("close-sidebar").onclick=()=>$(ids.sidebar).classList.remove("open");document.querySelectorAll("[data-close]").forEach(el=>el.onclick=()=>closeDrawer(el.dataset.close));render();handleOAuthCallback();
+</script>
+</body>
+</html>
